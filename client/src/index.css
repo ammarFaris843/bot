@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* HSR Dark Theme Palette */
+  --background: 240 30% 8%;         /* Deep Space Blue */
+  --foreground: 210 40% 98%;        /* Starlight White */
+  
+  --primary: 45 93% 65%;            /* Astral Gold/Yellow */
+  --primary-foreground: 240 30% 10%;
+  
+  --secondary: 190 80% 60%;         /* Holographic Cyan */
+  --secondary-foreground: 240 30% 10%;
+  
+  --muted: 240 25% 15%;             /* UI Panel Background */
+  --muted-foreground: 240 10% 70%;
+  
+  --accent: 265 80% 65%;            /* Quantum Purple */
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 345 90% 60%;       /* Warning Red */
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 240 20% 25%;
+  --input: 240 20% 20%;
+  --ring: 45 93% 65%;
+  
+  --radius: 0.25rem;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-primary;
+    font-family: var(--font-body);
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.1), transparent 25%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-wide uppercase;
+  }
+}
+
+@layer components {
+  /* HSR Style Panel */
+  .glass-panel {
+    @apply bg-muted/60 backdrop-blur-md border border-white/10 shadow-xl relative overflow-hidden;
+  }
+  
+  .glass-panel::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50;
+  }
+
+  /* Diagonal Cut Button Style */
+  .btn-hsr {
+    @apply relative overflow-hidden transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 uppercase font-bold tracking-wider;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 hover:bg-white/20 rounded-full;
+}
+
+/* ─── Animation support ────────────────────────────────────────────────────── */
+
+/* Smooth hardware-accelerated transforms for anime.js */
+.glass-panel {
+  will-change: transform, opacity;
+}
+
+/* Prevent subpixel flicker on clip-path wipes */
+[style*="clip-path"] {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Canvas fills its container for StarField */
+canvas {
+  display: block;
+}
